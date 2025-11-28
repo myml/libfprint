@@ -1,0 +1,37 @@
+From 58555413cefd4375242b6e1d70f803b67fcad096 Mon Sep 17 00:00:00 2001
+From: lichenggang <lichenggang@deepin.org>
+Date: Thu, 27 Nov 2025 17:19:17 +0800
+Subject: [PATCH] Add error handling for fpi_device_suspend_complete
+
+---
+ libfprint/fpi-device.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/libfprint/fpi-device.c b/libfprint/fpi-device.c
+index 1b9fa8f..d383998 100644
+--- a/libfprint/fpi-device.c
++++ b/libfprint/fpi-device.c
+@@ -1792,11 +1792,20 @@ fpi_device_suspend_complete (FpDevice *device,
+                              GError   *error)
+ {
+   FpDevicePrivate *priv = fp_device_get_instance_private (device);
++  g_autoptr(GTask) task = NULL;
+ 
+   g_return_if_fail (FP_IS_DEVICE (device));
+   g_return_if_fail (priv->suspend_resume_task);
+   g_return_if_fail (priv->suspend_error == NULL);
+ 
++  if (g_error_matches (error, FP_DEVICE_ERROR, FP_DEVICE_ERROR_NOT_SUPPORTED))
++    {
++      g_debug ("Driver does not support suspend, ignoring.");
++      task = g_steal_pointer (&priv->suspend_resume_task);
++      g_task_return_error (task, error);
++      return;
++    }
++
+   priv->suspend_error = g_steal_pointer (&error);
+   priv->is_suspended = TRUE;
+ 
+-- 
+2.47.2
+

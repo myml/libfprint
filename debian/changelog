@@ -1,3 +1,9 @@
+libfprint (1:1.94.7-2deepin2) unstable; urgency=medium
+
+  * add uru4000 suspend/resume.
+
+ -- lichenggang <lichenggang@deepin.org>  Thu, 27 Nov 2025 13:46:41 +0800
+
 libfprint (1:1.94.7-2deepin1) unstable; urgency=medium
 
   * Disable ut synaptice and focaltech_moc
