@@ -1,14 +1,28 @@
-libfprint (1:1.94.7-2deepin2) unstable; urgency=medium
+libfprint (1:1.94.9-1) unstable; urgency=medium
 
-  * add uru4000 suspend/resume.
+  * New upstream release
+  * debian/libfprint-2-2.postinst: Devices triggers updated
+  * debian/libfprint-2-2.install: Install metainfo data
+  * debian/control: Replace NSS build dependency with OpenSSL
+  * debian/control: Add b-d on GLib and Gio gir dev packages
 
- -- lichenggang <lichenggang@deepin.org>  Thu, 27 Nov 2025 13:46:41 +0800
+ -- Marco Trevisan (Treviño) <marco@ubuntu.com>  Thu, 20 Feb 2025 19:01:13 +0100
 
-libfprint (1:1.94.7-2deepin1) unstable; urgency=medium
+libfprint (1:1.94.8-2) unstable; urgency=medium
 
-  * Disable ut synaptice and focaltech_moc
+  * debian/control: Build-Depend on dh-sequence-gir
 
- -- xiangzelong <xiangzelong@deepin.org>  Thu, 30 May 2024 15:15:32 +0800
+ -- Marco Trevisan (Treviño) <marco@ubuntu.com>  Tue, 03 Sep 2024 06:02:52 +0200
+
+libfprint (1:1.94.8-1) unstable; urgency=medium
+
+  * New upstream release
+  * debian/watch: Update
+  * debian/libfprint-2-2.postinst: Devices triggers updated
+  * debian/patches: Drop, applied upstream
+  * debian/control: Update Standards Version (no change required)
+
+ -- Marco Trevisan (Treviño) <marco@ubuntu.com>  Tue, 03 Sep 2024 05:41:34 +0200
 
 libfprint (1:1.94.7-2) unstable; urgency=medium
 

@@ -56,6 +56,9 @@ if [ "$1" = "configure" -o "$1" = "upgrade" ] && command -V udevadm >/dev/null 2
 	udevadm trigger --action=add --attr-match=idVendor=1c7a --attr-match=idProduct=0570 || true
 	udevadm trigger --action=add --attr-match=idVendor=1c7a --attr-match=idProduct=0571 || true
 	udevadm trigger --action=add --attr-match=idVendor=1c7a --attr-match=idProduct=0582 || true
+	udevadm trigger --action=add --attr-match=idVendor=1c7a --attr-match=idProduct=0583 || true
+	udevadm trigger --action=add --attr-match=idVendor=1c7a --attr-match=idProduct=0586 || true
+	udevadm trigger --action=add --attr-match=idVendor=1c7a --attr-match=idProduct=0587 || true
 	udevadm trigger --action=add --attr-match=idVendor=1c7a --attr-match=idProduct=05a1 || true
 	udevadm trigger --action=add --attr-match=idVendor=04f3 --attr-match=idProduct=0903 || true
 	udevadm trigger --action=add --attr-match=idVendor=04f3 --attr-match=idProduct=0907 || true
@@ -124,24 +127,36 @@ if [ "$1" = "configure" -o "$1" = "upgrade" ] && command -V udevadm >/dev/null 2
 	udevadm trigger --action=add --attr-match=idVendor=04f3 --attr-match=idProduct=0c88 || true
 	udevadm trigger --action=add --attr-match=idVendor=04f3 --attr-match=idProduct=0c8c || true
 	udevadm trigger --action=add --attr-match=idVendor=04f3 --attr-match=idProduct=0c8d || true
+	udevadm trigger --action=add --attr-match=idVendor=04f3 --attr-match=idProduct=0c98 || true
 	udevadm trigger --action=add --attr-match=idVendor=04f3 --attr-match=idProduct=0c99 || true
+	udevadm trigger --action=add --attr-match=idVendor=04f3 --attr-match=idProduct=0c9d || true
+	udevadm trigger --action=add --attr-match=idVendor=04f3 --attr-match=idProduct=0c9f || true
+	udevadm trigger --action=add --attr-match=idVendor=04f3 --attr-match=idProduct=0ca3 || true
 	udevadm trigger --action=add --attr-match=idVendor=1c7a --attr-match=idProduct=0603 || true
 	udevadm trigger --action=add --attr-match=idVendor=2808 --attr-match=idProduct=9e48 || true
 	udevadm trigger --action=add --attr-match=idVendor=2808 --attr-match=idProduct=d979 || true
 	udevadm trigger --action=add --attr-match=idVendor=2808 --attr-match=idProduct=a959 || true
+	udevadm trigger --action=add --attr-match=idVendor=2808 --attr-match=idProduct=a99a || true
+	udevadm trigger --action=add --attr-match=idVendor=2808 --attr-match=idProduct=a57a || true
+	udevadm trigger --action=add --attr-match=idVendor=2808 --attr-match=idProduct=a78a || true
 	udevadm trigger --action=add --attr-match=idVendor=10a5 --attr-match=idProduct=ffe0 || true
 	udevadm trigger --action=add --attr-match=idVendor=10a5 --attr-match=idProduct=a305 || true
 	udevadm trigger --action=add --attr-match=idVendor=10a5 --attr-match=idProduct=da04 || true
 	udevadm trigger --action=add --attr-match=idVendor=10a5 --attr-match=idProduct=d805 || true
 	udevadm trigger --action=add --attr-match=idVendor=10a5 --attr-match=idProduct=d205 || true
+	udevadm trigger --action=add --attr-match=idVendor=10a5 --attr-match=idProduct=9524 || true
+	udevadm trigger --action=add --attr-match=idVendor=10a5 --attr-match=idProduct=9544 || true
+	udevadm trigger --action=add --attr-match=idVendor=10a5 --attr-match=idProduct=c844 || true
 	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=5840 || true
 	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=6014 || true
 	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=6092 || true
 	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=6094 || true
+	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=609a || true
 	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=609c || true
 	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=60a2 || true
 	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=60a4 || true
 	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=60bc || true
+	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=60c2 || true
 	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=6304 || true
 	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=631c || true
 	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=633c || true
@@ -152,6 +167,8 @@ if [ "$1" = "configure" -o "$1" = "upgrade" ] && command -V udevadm >/dev/null 2
 	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=63bc || true
 	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=63cc || true
 	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=6496 || true
+	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=650a || true
+	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=650c || true
 	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=6582 || true
 	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=6584 || true
 	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=658c || true
@@ -160,25 +177,35 @@ if [ "$1" = "configure" -o "$1" = "upgrade" ] && command -V udevadm >/dev/null 2
 	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=659a || true
 	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=659c || true
 	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=6a94 || true
+	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=6512 || true
+	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=689a || true
 	udevadm trigger --action=add --attr-match=idVendor=298d --attr-match=idProduct=1010 || true
 	udevadm trigger --action=add --attr-match=idVendor=0bda --attr-match=idProduct=5813 || true
+	udevadm trigger --action=add --attr-match=idVendor=0bda --attr-match=idProduct=5816 || true
 	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=00bd || true
+	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=00c2 || true
+	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=00c4 || true
+	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=00c6 || true
 	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=00df || true
+	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=00f0 || true
 	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=00f9 || true
 	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=00fc || true
-	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=00c2 || true
 	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=0100 || true
-	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=00f0 || true
 	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=0103 || true
+	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=0104 || true
+	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=0106 || true
+	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=0107 || true
+	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=0108 || true
 	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=0123 || true
 	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=0124 || true
 	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=0126 || true
 	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=0129 || true
-	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=0168 || true
 	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=015f || true
-	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=0104 || true
+	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=0168 || true
+	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=016c || true
 	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=0173 || true
-	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=0106 || true
+	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=0174 || true
+	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=019d || true
 	udevadm trigger --action=add --attr-match=idVendor=147e --attr-match=idProduct=2016 || true
 	udevadm trigger --action=add --attr-match=idVendor=147e --attr-match=idProduct=1000 || true
 	udevadm trigger --action=add --attr-match=idVendor=147e --attr-match=idProduct=1001 || true
@@ -203,7 +230,10 @@ if [ "$1" = "configure" -o "$1" = "upgrade" ] && command -V udevadm >/dev/null 2
 	udevadm trigger --action=add --attr-match=idVendor=138a --attr-match=idProduct=0017 || true
 	udevadm trigger --action=add --attr-match=idVendor=138a --attr-match=idProduct=0018 || true
 	udevadm trigger --action=add --attr-match=idVendor=138a --attr-match=idProduct=0091 || true
+	udevadm trigger --action=add --attr-match=idVendor=0a5c --attr-match=idProduct=5802 || true
 	udevadm trigger --action=add --attr-match=idVendor=047d --attr-match=idProduct=00f2 || true
+	udevadm trigger --action=add --attr-match=idVendor=047d --attr-match=idProduct=8054 || true
+	udevadm trigger --action=add --attr-match=idVendor=047d --attr-match=idProduct=8055 || true
 	udevadm trigger --action=add --attr-match=idVendor=04e8 --attr-match=idProduct=730b || true
 	udevadm trigger --action=add --attr-match=idVendor=04f3 --attr-match=idProduct=036b || true
 	udevadm trigger --action=add --attr-match=idVendor=04f3 --attr-match=idProduct=0c00 || true
@@ -211,16 +241,25 @@ if [ "$1" = "configure" -o "$1" = "upgrade" ] && command -V udevadm >/dev/null 2
 	udevadm trigger --action=add --attr-match=idVendor=04f3 --attr-match=idProduct=0c57 || true
 	udevadm trigger --action=add --attr-match=idVendor=04f3 --attr-match=idProduct=0c5e || true
 	udevadm trigger --action=add --attr-match=idVendor=04f3 --attr-match=idProduct=0c5a || true
+	udevadm trigger --action=add --attr-match=idVendor=04f3 --attr-match=idProduct=0c60 || true
 	udevadm trigger --action=add --attr-match=idVendor=04f3 --attr-match=idProduct=0c6c || true
 	udevadm trigger --action=add --attr-match=idVendor=04f3 --attr-match=idProduct=0c70 || true
 	udevadm trigger --action=add --attr-match=idVendor=04f3 --attr-match=idProduct=0c72 || true
 	udevadm trigger --action=add --attr-match=idVendor=04f3 --attr-match=idProduct=0c77 || true
+	udevadm trigger --action=add --attr-match=idVendor=04f3 --attr-match=idProduct=0c7c || true
+	udevadm trigger --action=add --attr-match=idVendor=04f3 --attr-match=idProduct=0c7f || true
+	udevadm trigger --action=add --attr-match=idVendor=04f3 --attr-match=idProduct=0c80 || true
+	udevadm trigger --action=add --attr-match=idVendor=04f3 --attr-match=idProduct=0c85 || true
+	udevadm trigger --action=add --attr-match=idVendor=04f3 --attr-match=idProduct=0c90 || true
 	udevadm trigger --action=add --attr-match=idVendor=04f3 --attr-match=idProduct=2706 || true
 	udevadm trigger --action=add --attr-match=idVendor=04f3 --attr-match=idProduct=3032 || true
 	udevadm trigger --action=add --attr-match=idVendor=04f3 --attr-match=idProduct=3057 || true
 	udevadm trigger --action=add --attr-match=idVendor=04f3 --attr-match=idProduct=3104 || true
 	udevadm trigger --action=add --attr-match=idVendor=04f3 --attr-match=idProduct=310d || true
 	udevadm trigger --action=add --attr-match=idVendor=04f3 --attr-match=idProduct=3128 || true
+	udevadm trigger --action=add --attr-match=idVendor=04f3 --attr-match=idProduct=0c8a || true
+	udevadm trigger --action=add --attr-match=idVendor=05ba --attr-match=idProduct=000e || true
+	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=0051 || true
 	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=0081 || true
 	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=0088 || true
 	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=008a || true
@@ -231,7 +270,6 @@ if [ "$1" = "configure" -o "$1" = "upgrade" ] && command -V udevadm >/dev/null 2
 	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=00b7 || true
 	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=00bb || true
 	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=00be || true
-	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=00c4 || true
 	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=00cb || true
 	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=00c9 || true
 	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=00d8 || true
@@ -241,6 +279,7 @@ if [ "$1" = "configure" -o "$1" = "upgrade" ] && command -V udevadm >/dev/null 2
 	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=00e7 || true
 	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=00e9 || true
 	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=00fd || true
+	udevadm trigger --action=add --attr-match=idVendor=06cb --attr-match=idProduct=00ff || true
 	udevadm trigger --action=add --attr-match=idVendor=0a5c --attr-match=idProduct=5801 || true
 	udevadm trigger --action=add --attr-match=idVendor=0a5c --attr-match=idProduct=5805 || true
 	udevadm trigger --action=add --attr-match=idVendor=0a5c --attr-match=idProduct=5834 || true
@@ -250,10 +289,18 @@ if [ "$1" = "configure" -o "$1" = "upgrade" ] && command -V udevadm >/dev/null 2
 	udevadm trigger --action=add --attr-match=idVendor=0a5c --attr-match=idProduct=5843 || true
 	udevadm trigger --action=add --attr-match=idVendor=0a5c --attr-match=idProduct=5844 || true
 	udevadm trigger --action=add --attr-match=idVendor=0a5c --attr-match=idProduct=5845 || true
+	udevadm trigger --action=add --attr-match=idVendor=0a5c --attr-match=idProduct=5860 || true
+	udevadm trigger --action=add --attr-match=idVendor=0a5c --attr-match=idProduct=5863 || true
+	udevadm trigger --action=add --attr-match=idVendor=0a5c --attr-match=idProduct=5864 || true
+	udevadm trigger --action=add --attr-match=idVendor=0a5c --attr-match=idProduct=5865 || true
+	udevadm trigger --action=add --attr-match=idVendor=0a5c --attr-match=idProduct=5866 || true
+	udevadm trigger --action=add --attr-match=idVendor=0a5c --attr-match=idProduct=5867 || true
 	udevadm trigger --action=add --attr-match=idVendor=0bda --attr-match=idProduct=5812 || true
 	udevadm trigger --action=add --attr-match=idVendor=10a5 --attr-match=idProduct=0007 || true
 	udevadm trigger --action=add --attr-match=idVendor=10a5 --attr-match=idProduct=9200 || true
 	udevadm trigger --action=add --attr-match=idVendor=10a5 --attr-match=idProduct=9800 || true
+	udevadm trigger --action=add --attr-match=idVendor=10a5 --attr-match=idProduct=a120 || true
+	udevadm trigger --action=add --attr-match=idVendor=10a5 --attr-match=idProduct=a900 || true
 	udevadm trigger --action=add --attr-match=idVendor=10a5 --attr-match=idProduct=e340 || true
 	udevadm trigger --action=add --attr-match=idVendor=1188 --attr-match=idProduct=9545 || true
 	udevadm trigger --action=add --attr-match=idVendor=138a --attr-match=idProduct=0007 || true
@@ -274,7 +321,11 @@ if [ "$1" = "configure" -o "$1" = "upgrade" ] && command -V udevadm >/dev/null 2
 	udevadm trigger --action=add --attr-match=idVendor=1c7a --attr-match=idProduct=0300 || true
 	udevadm trigger --action=add --attr-match=idVendor=1c7a --attr-match=idProduct=0575 || true
 	udevadm trigger --action=add --attr-match=idVendor=1c7a --attr-match=idProduct=0576 || true
+	udevadm trigger --action=add --attr-match=idVendor=1c7a --attr-match=idProduct=0584 || true
 	udevadm trigger --action=add --attr-match=idVendor=1c7a --attr-match=idProduct=0577 || true
+	udevadm trigger --action=add --attr-match=idVendor=1c7a --attr-match=idProduct=057e || true
+	udevadm trigger --action=add --attr-match=idVendor=2541 --attr-match=idProduct=0236 || true
+	udevadm trigger --action=add --attr-match=idVendor=2541 --attr-match=idProduct=9711 || true
 	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=5042 || true
 	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=5110 || true
 	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=5117 || true
@@ -303,11 +354,17 @@ if [ "$1" = "configure" -o "$1" = "upgrade" ] && command -V udevadm >/dev/null 2
 	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=5e0a || true
 	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=581a || true
 	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=589a || true
+	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=5f10 || true
 	udevadm trigger --action=add --attr-match=idVendor=27c6 --attr-match=idProduct=6382 || true
 	udevadm trigger --action=add --attr-match=idVendor=2808 --attr-match=idProduct=9338 || true
+	udevadm trigger --action=add --attr-match=idVendor=2808 --attr-match=idProduct=9348 || true
 	udevadm trigger --action=add --attr-match=idVendor=2808 --attr-match=idProduct=93a9 || true
+	udevadm trigger --action=add --attr-match=idVendor=2808 --attr-match=idProduct=a658 || true
+	udevadm trigger --action=add --attr-match=idVendor=2808 --attr-match=idProduct=c652 || true
 	udevadm trigger --action=add --attr-match=idVendor=298d --attr-match=idProduct=2020 || true
 	udevadm trigger --action=add --attr-match=idVendor=298d --attr-match=idProduct=2033 || true
+	udevadm trigger --action=add --attr-match=idVendor=2df0 --attr-match=idProduct=0003 || true
+	udevadm trigger --action=add --attr-match=idVendor=3274 --attr-match=idProduct=8012 || true
 	udevadm trigger --action=add --attr-match=idVendor=3538 --attr-match=idProduct=0930 || true
 
 fi

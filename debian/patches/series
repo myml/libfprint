@@ -1,6 +1,0 @@
-build-Look-for-sh-just-once.patch
-build-tests-Skip-a-test-if-the-test-requires-it-during-in.patch
-0001-Disable-synaptics-and-focaltech_moc.patch
-add-uru4000-suspend-resume.patch
-0001-Add-error-handling-for-fpi_device_suspend_complete.patch
-0001-skip-tests-fpi-device.patch
