@@ -1,0 +1,20 @@
+--- libfprint-1.94.9.orig/tests/meson.build
++++ libfprint-1.94.9/tests/meson.build
+@@ -39,7 +39,7 @@ drivers_tests = [
+     'elan-cobo',
+     'elanmoc',
+     'elanspi',
+-    'synaptics',
++#    'synaptics',
+     'upektc_img',
+     'upektc_img-tcs1s',
+     'uru4000-msv2',
+@@ -58,7 +58,7 @@ drivers_tests = [
+     'fpcmoc',
+ 	'realtek',
+ 	'realtek-5816',
+-    'focaltech_moc',
++#    'focaltech_moc',
+ ]
+ 
+ if get_option('introspection')

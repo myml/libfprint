@@ -1,6 +1,14 @@
 #!/usr/bin/make -f
 
+include /usr/share/dpkg/default.mk
+DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
+
 export DPKG_GENSYMBOLS_CHECK_LEVEL = 2
+
+TIMEOUT_MULTIPLIER = 5
+ifeq ($(DEB_HOST_ARCH), riscv64)
+    TIMEOUT_MULTIPLIER = 20
+endif
 
 BUILDDIR = $(CURDIR)/obj-$(DEB_HOST_GNU_TYPE)
 
@@ -18,7 +26,7 @@ override_dh_auto_configure:
 	dh_auto_configure -- $(CONFIG_ARGS)
 
 override_dh_auto_test:
-	dh_auto_test -- -C $(BUILDDIR) --timeout-multiplier 5
+	dh_auto_test -- -C $(BUILDDIR) --timeout-multiplier $(TIMEOUT_MULTIPLIER)
 
 override_dh_auto_clean:
 	rm -rf tests/__pycache__
