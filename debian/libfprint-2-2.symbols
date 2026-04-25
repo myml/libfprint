@@ -63,11 +63,13 @@ libfprint-2.so.2 libfprint-2-2 #MINVER#
  fp_image_detect_minutiae@LIBFPRINT_2.0.0 1:1.90.1
  fp_image_detect_minutiae_finish@LIBFPRINT_2.0.0 1:1.90.1
  fp_image_device_get_type@LIBFPRINT_2.0.0 1:1.90.1
+ fp_image_extract_sigfm_info@LIBFPRINT_2.0.0 1:1.94.100
  fp_image_get_binarized@LIBFPRINT_2.0.0 1:1.90.1
  fp_image_get_data@LIBFPRINT_2.0.0 1:1.90.1
  fp_image_get_height@LIBFPRINT_2.0.0 1:1.90.1
  fp_image_get_minutiae@LIBFPRINT_2.0.0 1:1.90.1
  fp_image_get_ppmm@LIBFPRINT_2.0.0 1:1.90.1
+ fp_image_get_sigfm_info@LIBFPRINT_2.0.0 1:1.94.100
  fp_image_get_type@LIBFPRINT_2.0.0 1:1.90.1
  fp_image_get_width@LIBFPRINT_2.0.0 1:1.90.1
  fp_image_new@LIBFPRINT_2.0.0 1:1.90.1

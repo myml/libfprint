@@ -1,11 +1,3 @@
-spi_sources = []
-spi_headers = []
-
-if enabled_spi_drivers.length() > 0
-  spi_headers = ['fpi-spi-transfer.h']
-  spi_sources = ['fpi-spi-transfer.c']
-endif
-
 libfprint_sources = [
     'fp-context.c',
     'fp-device.c',
@@ -24,7 +16,8 @@ libfprint_private_sources = [
     'fpi-print.c',
     'fpi-ssm.c',
     'fpi-usb-transfer.c',
-] + spi_sources
+    'fpi-spi-transfer.c',
+]
 
 libfprint_public_headers = [
     'fp-context.h',
@@ -48,8 +41,9 @@ libfprint_private_headers = [
     'fpi-minutiae.h',
     'fpi-print.h',
     'fpi-usb-transfer.h',
+    'fpi-spi-transfer.h',
     'fpi-ssm.h',
-] + spi_headers
+]
 
 nbis_sources = [
     'nbis/bozorth3/bozorth3.c',
@@ -125,8 +119,6 @@ driver_sources = {
         [ 'drivers/etes603.c' ],
     'egis0570' :
         [ 'drivers/egis0570.c' ],
-    'egismoc' :
-        [ 'drivers/egismoc/egismoc.c' ],
     'vfs0050' :
         [ 'drivers/vfs0050.c' ],
     'elan' :
@@ -149,10 +141,8 @@ driver_sources = {
         [ 'drivers/goodixmoc/goodix.c', 'drivers/goodixmoc/goodix_proto.c' ],
     'fpcmoc' :
         [ 'drivers/fpcmoc/fpc.c' ],
-    'realtek' :
-        [ 'drivers/realtek/realtek.c' ],
-    'focaltech_moc' :
-        [ 'drivers/focaltech_moc/focaltech_moc.c' ],
+    'cs9711' :
+        [ 'drivers/cs9711/cs9711.c' ],
 }
 
 helper_sources = {
@@ -162,7 +152,7 @@ helper_sources = {
         [ 'drivers/aesx660.c' ],
     'aes3k' :
         [ 'drivers/aes3k.c' ],
-    'openssl' :
+    'nss' :
         [ ],
     'udev' :
         [ ],
@@ -236,6 +226,8 @@ deps = [
     mathlib_dep,
 ] + optional_deps
 
+subdir('sigfm')
+
 # These are empty and only exist so that the include directories are created
 # in the build tree. This silences a build time warning.
 subdir('nbis/include')
@@ -258,13 +250,15 @@ libnbis = static_library('nbis',
     ]),
     install: false)
 
+priv_deps = deps + libsigfm
+
 libfprint_private = static_library('fprint-private',
     sources: [
         fpi_enums,
         libfprint_private_sources,
     ],
     dependencies: deps,
-    link_with: libnbis,
+    link_with: [libnbis, libsigfm],
     install: false)
 
 libfprint_drivers = static_library('fprint-drivers',
@@ -274,13 +268,8 @@ libfprint_drivers = static_library('fprint-drivers',
     link_with: libfprint_private,
     install: false)
 
-mapfile = files('libfprint.ver')[0]
-if meson.version().version_compare('>=1.4')
-    mapfile_path = mapfile.full_path()
-else
-    mapfile_path = meson.project_source_root() / '@0@'.format(mapfile)
-endif
-vflag = '-Wl,--version-script,@0@'.format(mapfile_path)
+mapfile = files('libfprint.ver')
+vflag = '-Wl,--version-script,@0@/@1@'.format(meson.project_source_root(), mapfile[0])
 
 libfprint = shared_library(versioned_libname.split('lib')[1],
     sources: [
@@ -308,6 +297,9 @@ libfprint_dep = declare_dependency(link_with: libfprint,
 install_headers(['fprint.h'] + libfprint_public_headers,
     subdir: versioned_libname
 )
+install_headers(['sigfm/sigfm.h'],
+  subdir: versioned_libname + '/sigfm'
+)
 
 libfprint_private_dep = declare_dependency(
     include_directories: include_directories('.'),
@@ -330,21 +322,6 @@ udev_hwdb_generator = custom_target('udev-hwdb',
     capture: true,
     command: [ udev_hwdb ],
     install: false,
-)
-
-metainfo = executable('fprint-list-metainfo',
-    'fprint-list-metainfo.c',
-    dependencies: libfprint_private_dep,
-    link_with: libfprint_drivers,
-    install: false)
-
-metainfo_generator = custom_target('metainfo',
-    output: 'org.freedesktop.libfprint.metainfo.xml',
-    depend_files: drivers_sources,
-    capture: true,
-    command: [ metainfo ],
-    install: true,
-    install_dir: datadir / 'metainfo'
 )
 
 if install_udev_rules

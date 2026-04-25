@@ -73,7 +73,7 @@
 struct _FpiSsm
 {
   FpDevice               *dev;
-  char                   *name;
+  const char             *name;
   FpiSsm                 *parentsm;
   gpointer                ssm_data;
   GDestroyNotify          ssm_data_destroy;

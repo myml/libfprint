@@ -1,14 +1,14 @@
 project('libfprint', [ 'c', 'cpp' ],
-    version: '1.94.9',
+    version: '1.94.6',
     license: 'LGPLv2.1+',
     default_options: [
         'buildtype=debugoptimized',
         'warning_level=1',
         'c_std=gnu99',
+        'cpp_std=c++17',
     ],
-    meson_version: '>= 0.59.0')
+    meson_version: '>= 0.56.0')
 
-fs = import('fs')
 gnome = import('gnome')
 
 libfprint_conf = configuration_data()
@@ -22,17 +22,12 @@ datadir = prefix / get_option('datadir')
 cc = meson.get_compiler('c')
 cpp = meson.get_compiler('cpp')
 host_system = host_machine.system()
-
-libfprint_sanitizers = get_option('b_sanitize').split(',')
-if libfprint_sanitizers == ['none']
-  libfprint_sanitizers = []
-endif
-
-glib_min_version = '2.68'
+glib_min_version = '2.56'
 
 glib_version_def = 'GLIB_VERSION_@0@_@1@'.format(
     glib_min_version.split('.')[0], glib_min_version.split('.')[1])
 common_cflags = cc.get_supported_arguments([
+    '-Wall',
     '-Wcast-align',
     '-Wformat-nonliteral',
     '-Wformat-security',
@@ -97,14 +92,10 @@ gusb_dep = dependency('gusb', version: '>= 0.2.0')
 mathlib_dep = cc.find_library('m', required: false)
 
 # The following dependencies are only used for tests
-sh = find_program('sh', required: true)
 cairo_dep = dependency('cairo', required: false)
 
 # introspection scanning and Gio-2.0.gir
 gobject_introspection = dependency('gobject-introspection-1.0', required: get_option('introspection'))
-
-# SPI
-have_spi = host_machine.system() == 'linux'
 
 # Drivers
 drivers = get_option('drivers').split(',')
@@ -130,7 +121,6 @@ default_drivers = [
     'vfs0050',
     'etes603',
     'egis0570',
-    'egismoc',
     'vcom5s',
     'synaptics',
     'elan',
@@ -142,42 +132,17 @@ default_drivers = [
     'goodixmoc',
     'nb1010',
     'fpcmoc',
-    'realtek',
-    'focaltech_moc',
-]
+    'cs9711',
 
-spi_drivers = [
-    'elanspi'
+    # SPI
+    'elanspi',
 ]
-
-if have_spi
-    default_drivers += spi_drivers
-endif
 
 # FIXME: All the drivers should be fixed by adjusting the byte order.
 # See https://gitlab.freedesktop.org/libfprint/libfprint/-/issues/236
 endian_independent_drivers = virtual_drivers + [
-    'aes1610',
-    'aes1660',
-    'aes2550',
-    'aes2660',
     'aes3500',
-    'aes4000',
-    'egis0570',
-    'egismoc',
-    'elanmoc',
-    'etes603',
-    'focaltech_moc',
-    'nb1010',
-    'realtek',
     'synaptics',
-    'upeksonly',
-    'upektc',
-    'upektc_img',
-    'upekts',
-    'vcom5s',
-    'vfs101',
-    'vfs7552',
 ]
 
 all_drivers = default_drivers + virtual_drivers
@@ -190,17 +155,6 @@ if drivers == [ 'default' ]
     drivers = default_drivers
 endif
 
-enabled_spi_drivers = []
-foreach driver : spi_drivers
-    if driver in drivers
-        enabled_spi_drivers += driver
-    endif
-endforeach
-
-if enabled_spi_drivers.length() > 0 and not have_spi
-    error('SPI drivers @0@ are not supported'.format(enabled_spi_drivers))
-endif
-
 driver_helper_mapping = {
     'aes1610' : [ 'aeslib' ],
     'aes1660' : [ 'aeslib', 'aesx660' ],
@@ -209,7 +163,7 @@ driver_helper_mapping = {
     'aes2660' : [ 'aeslib', 'aesx660' ],
     'aes3500' : [ 'aeslib', 'aes3k' ],
     'aes4000' : [ 'aeslib', 'aes3k' ],
-    'uru4000' : [ 'openssl' ],
+    'uru4000' : [ 'nss' ],
     'elanspi' : [ 'udev' ],
     'virtual_image'          : [ 'virtual' ],
     'virtual_device'         : [ 'virtual' ],
@@ -266,13 +220,13 @@ foreach i : driver_helpers
 
         libfprint_conf.set10('HAVE_PIXMAN', true)
         optional_deps += imaging_dep
-    elif i == 'openssl'
-        openssl_dep = dependency('openssl', version: '>= 3.0', required: false)
-        if not openssl_dep.found()
-            error('OpenSSL is required for @0@ and possibly others'.format(driver))
+    elif i == 'nss'
+        nss_dep = dependency('nss', required: false)
+        if not nss_dep.found()
+            error('nss is required for @0@ and possibly others'.format(driver))
         endif
 
-        optional_deps += openssl_dep
+        optional_deps += nss_dep
     elif i == 'udev'
         install_udev_rules = true
 
@@ -295,7 +249,7 @@ if install_udev_rules
     udev_rules_dir = get_option('udev_rules_dir')
     if udev_rules_dir == 'auto'
         udev_dep = dependency('udev')
-        udev_rules_dir = udev_dep.get_variable(pkgconfig: 'udevdir') + '/rules.d'
+        udev_rules_dir = udev_dep.get_pkgconfig_variable('udevdir') + '/rules.d'
     endif
 endif
 
@@ -332,7 +286,7 @@ if not udev_hwdb.disabled()
 
     if udev_hwdb_dir == 'auto'
         udev_dep = dependency('udev')
-        udev_hwdb_dir = udev_dep.get_variable(pkgconfig: 'udevdir') + '/hwdb.d'
+        udev_hwdb_dir = udev_dep.get_pkgconfig_variable('udevdir') + '/hwdb.d'
     endif
 else
     udev_hwdb_dir = ''

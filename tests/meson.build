@@ -15,7 +15,7 @@ envs.prepend('LD_LIBRARY_PATH', meson.project_build_root() / 'libfprint')
 envs.set('FP_DEVICE_EMULATION', '1')
 
 # Set a colon-separated list of native drivers we enable in tests
-envs.set('FP_DRIVERS_ALLOWLIST', ':'.join([
+envs.set('FP_DRIVERS_WHITELIST', ':'.join([
     'virtual_image',
     'virtual_device',
     'virtual_device_storage',
@@ -51,14 +51,7 @@ drivers_tests = [
     'goodixmoc',
     'nb1010',
     'egis0570',
-    'egismoc',
-    'egismoc-05a1',
-    'egismoc-0586',
-    'egismoc-0587',
     'fpcmoc',
-	'realtek',
-	'realtek-5816',
-    'focaltech_moc',
 ]
 
 if get_option('introspection')
@@ -103,17 +96,11 @@ if get_option('introspection')
             base_args = files(vdtest + '.py')
             suite = ['virtual-driver']
 
-            r = run_command(unittest_inspector, files(vdtest + '.py'), check: false)
+            r = run_command(unittest_inspector, files(vdtest + '.py'), check: true)
             unit_tests = r.stdout().strip().split('\n')
 
             if r.returncode() == 0 and unit_tests.length() > 0
                 suite += vdtest
-            elif r.returncode() == 77
-                test(vdtest,
-                    sh,
-                    args: ['-c', 'exit 77']
-                )
-                continue
             else
                 unit_tests = [vdtest]
             endif
@@ -145,7 +132,8 @@ if get_option('introspection')
                     output: vdtest + '.test',
                     install_dir: installed_tests_testdir,
                     configuration: {
-                        'exec': installed_tests_execdir / fs.name(base_args[0]),
+                        # FIXME: use fs.name() on meson 0.58
+                        'exec': installed_tests_execdir / '@0@'.format(base_args[0]).split('/')[-1],
                         'env': ' '.join([
                             envs_str,
                             'LD_LIBRARY_PATH=' + installed_tests_libdir,
@@ -159,7 +147,7 @@ if get_option('introspection')
             endif
         else
             test(vdtest,
-                sh,
+                find_program('sh'),
                 args: ['-c', 'exit 77']
             )
         endif
@@ -169,7 +157,7 @@ if get_option('introspection')
     foreach driver_test: drivers_tests
         driver_name = driver_test.split('-')[0]
         driver_envs = envs
-        driver_envs.set('FP_DRIVERS_ALLOWLIST', driver_name)
+        driver_envs.set('FP_DRIVERS_WHITELIST', driver_name)
 
         if (driver_name in supported_drivers and
             gusb_dep.version().version_compare('>= 0.3.0'))
@@ -213,7 +201,7 @@ if get_option('introspection')
             endif
         else
             test(driver_test,
-                sh,
+                find_program('sh'),
                 args: ['-c', 'exit 77']
             )
         endif
@@ -232,13 +220,13 @@ if get_option('introspection')
 else
     warning('Skipping all driver tests as introspection bindings are missing')
     test('virtual-image',
-        sh,
+        find_program('sh'),
         args: ['-c', 'exit 77']
     )
 
     foreach driver_test: drivers_tests
         test(driver_test,
-            sh,
+            find_program('sh'),
             args: ['-c', 'exit 77']
         )
     endforeach
@@ -281,7 +269,7 @@ foreach test_name: unit_tests
             # Create a dummy test that always skips instead
             warning('Test @0@ cannot be compiled due to missing dependencies'.format(test_name))
             test(test_name,
-                sh,
+                find_program('sh'),
                 suite: ['unit-tests'],
                 args: ['-c', 'exit 77'],
             )
@@ -324,25 +312,13 @@ endforeach
 # Run udev rule generator with fatal warnings
 envs.set('UDEV_HWDB', udev_hwdb.full_path())
 envs.set('UDEV_HWDB_CHECK_CONTENTS', default_drivers_are_enabled ? '1' : '0')
-envs.set('G_MESSAGES_DEBUG', '')
 test('udev-hwdb',
      find_program('test-generated-hwdb.sh'),
      depends: udev_hwdb,
-     suite: ['data', 'no-valgrind'],
      env: envs)
 
-appstreamcli = find_program('appstreamcli', required: false)
-if appstreamcli.found()
-    test('metainfo-validate',
-        appstreamcli,
-        args: ['validate', metainfo_generator],
-        depends: metainfo_generator,
-        suite: ['data', 'no-valgrind'],
-    )
-endif
-
 gdb = find_program('gdb', required: false)
-if gdb.found() and libfprint_sanitizers.length() == 0
+if gdb.found()
     libfprint_wrapper = [
         gdb.full_path(),
         '-batch',
@@ -357,32 +333,14 @@ if gdb.found() and libfprint_sanitizers.length() == 0
         ])
 endif
 
-if ('address' in libfprint_sanitizers or
-    'undefined' in libfprint_sanitizers or
-    'leak' in libfprint_sanitizers)
-    add_test_setup('sanitizers',
-        is_default: true,
-        timeout_multiplier: 3,
-        env: [
-            'ASAN_OPTIONS=verify_asan_link_order=0',
-        ])
-endif
-
 valgrind = find_program('valgrind', required: false)
-if valgrind.found() and libfprint_sanitizers.length() == 0
-    glib_share = glib_dep.get_variable(pkgconfig: 'prefix') / 'share' / glib_dep.name()
+if valgrind.found()
+    glib_share = glib_dep.get_pkgconfig_variable('prefix') / 'share' / glib_dep.name()
     glib_suppressions = glib_share + '/valgrind/glib.supp'
-    libfprint_suppressions = files('libfprint.supp')[0]
-    python_suppressions = files('valgrind-python.supp')[0]
-
-    if meson.version().version_compare('>=1.4')
-        libfprint_suppressions = libfprint_suppressions.full_path()
-        python_suppressions = python_suppressions.full_path()
-    else
-        libfprint_suppressions = meson.project_source_root() / '@0@'.format(libfprint_suppressions)
-        python_suppressions = meson.project_source_root() / '@0@'.format(python_suppressions)
-    endif
-
+    libfprint_suppressions = '@0@/@1@'.format(meson.project_source_root(),
+        files('libfprint.supp')[0])
+    python_suppressions = '@0@/@1@'.format(meson.project_source_root(),
+        files('valgrind-python.supp')[0])
     libfprint_wrapper = [
         valgrind.full_path(),
         '--tool=memcheck',
@@ -399,14 +357,11 @@ if valgrind.found() and libfprint_sanitizers.length() == 0
         '--suppressions=' + python_suppressions,
     ]
     add_test_setup('valgrind',
-        timeout_multiplier: 20,
+        timeout_multiplier: 15,
         exe_wrapper: libfprint_wrapper,
-        exclude_suites: ['no-valgrind'],
         env: [
             'G_SLICE=always-malloc',
             'UNDER_VALGRIND=1',
-            'FP_VIRTUAL_IMAGE_HOT_SECONDS=-1',
-            'FP_VIRTUAL_DEVICE_HOT_SECONDS=-1',
             'LIBFPRINT_TEST_WRAPPER=' + ' '.join(libfprint_wrapper),
         ])
 endif
